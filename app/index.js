@@ -10,7 +10,7 @@ import userActivity from "user-activity"; //adjusted types (matching the stats t
 clock.granularity = "seconds"; //clock is refreshing every sec. It is possible to select minutes as well
 
 // Get a handle on the <text> elements specified in the index.gui file
-const timeHandle = document.getElementById("timeLabel");
+const label_time = document.getElementById("timeLabel");
 const batteryHandle = document.getElementById("batteryLabel");
 const stepsHandle = document.getElementById("stepsLabel");
 const heartrateHandle = document.getElementById("heartrateLabel");
@@ -30,21 +30,23 @@ clock.ontick = (evt) => {
     const now = evt.date; // get the actual instant
     let hours = now.getHours(); // separate the actual hours from the instant "now"
     let mins = now.getMinutes(); // separate the actual minute from the instant "now"
-    let seconds = now.getSeconds();
+    let secs = now.getSeconds();
     let day = now.getDay();
     let date = now.getDate();
     let month = now.getMonth();
-    if (preferences.clockDisplay === "12h") { // check from your wach settings if you use 12h or 24h visualization
-        // 12h format
-        hours = zeroPad(hours % 12 || 12);
-    } else {
-        // 24h format
-        hours = zeroPad(hours); // when you use 24h in case hours are in one digit then I put a zero in front. i.e. 3 am -> 03
+    
+    // Check 12 or 24 hours
+    if (preferences.clockDisplay === "12h") {
+        hours = hours % 12 || 12;
     }
-    hours = monoDigits(hours);
-    let minsZeroed = monoDigits(zeroPad(mins)); // one digit mins get a zero in front
-    let secondsZeroed = monoDigits(zeroPad(seconds));
-    timeHandle.text = `${hours}:${minsZeroed}:${secondsZeroed}`; // time in format hh:mm:ss is assigned in the timeHandle defined at line 13
+
+    // Format numbers for display
+    let disp_hours = monoDigits(zeroPad(hours));
+    let disp_mins = monoDigits(zeroPad(mins));
+    let disp_secs = monoDigits(zeroPad(secs));
+
+    // Time in format hh:mm:ss
+    label_time.text = `${disp_hours}:${disp_mins}:${disp_secs}`;
 
     let dayName = getDayName(day);
     let monthName = getMonthName(month);
