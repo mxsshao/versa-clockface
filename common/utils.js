@@ -36,3 +36,7 @@ function hex2a(hex) {
     }
     return str.toString();
 }
+
+export function numberWithCommas(x) {
+    return x.replace(/\B(?=(.{3})+(?!.))/g, ",");
+}

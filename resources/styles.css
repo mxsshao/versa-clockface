@@ -3,7 +3,7 @@
 }
 
 #timeLabel {
-  font-size: 70;
+  font-size: 76;
   font-family: System-Regular;
   text-length: 8;
   text-anchor: middle;
@@ -13,24 +13,15 @@
 }
 
 #dateLabel {
-  font-size: 20;
+  font-size: 26;
   font-family: System-Regular;
   text-length: 30;
   text-anchor: middle;
   x: 50%;
-  y: 185;
+  y: 189;
   fill: whitesmoke;
 }
 
-#heartrateLabel {
-  font-size: 50;
-  font-family: System-Bold;
-  text-length: 3;
-  text-anchor: middle;
-  x: 20%;
-  y: 80%;
-  fill: red;
-}
 
 #batteryLabel {
   font-size: 15;
@@ -43,13 +34,31 @@
 }
 
 
-#stepsLabel {
-  font-size: 20;
-  font-family: System-Bold;
-  text-length: 20;
-  text-anchor: start;
-  x: 50%;
-  y: 80%;
-  fill: white;
+#label_steps {
+  font-size: 18;
+  font-family: System-Regular;
+  text-length: 10;
+  text-anchor: middle;
+  fill: #bcd8f8;
 }
-
+#label_cals {
+  font-size: 18;
+  font-family: System-Regular;
+  text-length: 10;
+  text-anchor: middle;
+  fill: #7898f8;
+}
+#label_active {
+  font-size: 18;
+  font-family: System-Regular;
+  text-length: 10;
+  text-anchor: middle;
+  fill: #d893ff;
+}
+#label_heart {
+  font-size: 18;
+  font-family: System-Regular;
+  text-length: 10;
+  text-anchor: middle;
+  fill: #f83c40;
+}

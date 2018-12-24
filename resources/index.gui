@@ -1,10 +1,17 @@
 <svg class="background">
   <text id="timeLabel"/>
   <text id="dateLabel" />
-  <text id="heartrateLabel" />
+  
   <text id="batteryLabel" />
-  <text id="stepsLabel" />
-  <rect x="0" y="90" width="100%" height="2" fill="#444444" />
-  <rect x="0" y="160" width="100%" height="2" fill="#444444" /> 
-  <rect x="0" y="190" width="100%" height="2" fill="#444444" /> 
+  <text id="label_steps" x="45" y="285"/>
+  <text id="label_cals" x="115" y="285"/>
+  <text id="label_active" x="185" y="285"/>
+  <text id="label_heart" x="255" y="285"/>
+  <rect x="0" y="82" width="100%" height="3" fill="#44171d" />
+  <!-- <rect x="0" y="160" width="100%" height="3" fill="#44171d" />  -->
+  <rect x="0" y="202" width="100%" height="3" fill="#44171d" />
+  <arc x="20" y="215" width="50" height="50" fill="#333333" arc-width="3" start-angle="0" sweep-angle="360" />
+  <arc x="90" y="215" width="50" height="50" fill="#333333" arc-width="3" start-angle="0" sweep-angle="360" />
+  <arc x="160" y="215" width="50" height="50" fill="#333333" arc-width="3" start-angle="0" sweep-angle="360" />
+  <arc x="230" y="215" width="50" height="50" fill="#333333" arc-width="3" start-angle="0" sweep-angle="360" />
 </svg>

@@ -10,7 +10,7 @@
   "fitbit": {
     "appUUID": "6a61b4c7-c375-4324-8484-f93ebeb52055",
     "appType": "clockface",
-    "appDisplayName": "Versa Clockface",
+    "appDisplayName": "Illium Clockface",
     "iconFile": "resources/icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [

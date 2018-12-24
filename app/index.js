@@ -1,10 +1,10 @@
 import clock from "clock"; // needed to have a clock! (see line 33)
 import document from "document"; // needed for I have no idea what! If you don't put this nothing works!!!
 import { preferences } from "user-settings"; // needed to get the user preference 12h or 24h (see line 38)
-import { zeroPad, getDayName, getMonthName, monoDigits } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
+import { zeroPad, getDayName, getMonthName, monoDigits, numberWithCommas } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
 import { HeartRateSensor } from "heart-rate"; // import HR reading from sensor (seel line 18)
 import { battery } from "power"; // import battery level (see line26)
-import userActivity from "user-activity"; //adjusted types (matching the stats that you upload to fitbit.com, as opposed to local types)
+import { today as activity_today} from "user-activity"; //adjusted types (matching the stats that you upload to fitbit.com, as opposed to local types)
 
 // Update the clock every minute
 clock.granularity = "seconds"; //clock is refreshing every sec. It is possible to select minutes as well
@@ -12,15 +12,24 @@ clock.granularity = "seconds"; //clock is refreshing every sec. It is possible t
 // Get a handle on the <text> elements specified in the index.gui file
 const label_time = document.getElementById("timeLabel");
 const batteryHandle = document.getElementById("batteryLabel");
-const stepsHandle = document.getElementById("stepsLabel");
-const heartrateHandle = document.getElementById("heartrateLabel");
+const label_steps = document.getElementById("label_steps");
+const label_cals = document.getElementById("label_cals");
+const label_active = document.getElementById("label_active");
+const label_heart = document.getElementById("label_heart");
 const dateHandle = document.getElementById("dateLabel");
 
 // The following block read the heart rate from your watch
 const hrm = new HeartRateSensor();
 
 hrm.onreading = function () {
-    heartrateHandle.text = `${hrm.heartRate}`; // the measured HR is being sent to the heartrateHandle set at line 16
+    let heart = (hrm.heartRate || 0)
+    let disp_heart = "";
+    if (heart === 0) {
+        disp_heart = "---";
+    } else {
+        disp_heart = monoDigits(heart);
+    }
+    label_heart.text = `${disp_heart}`; // the measured HR is being sent to the heartrateHandle set at line 16
 }
 hrm.start();
 
@@ -52,10 +61,39 @@ clock.ontick = (evt) => {
     let monthName = getMonthName(month);
     dateHandle.text = `${dayName} ${date} ${monthName}`;
 
-    // Activity Values: adjusted type
-    let stepsValue = (userActivity.today.adjusted["steps"] || 0); // steps value measured from fitbit is assigned to the variable stepsValue
-    let stepsString = stepsValue + ' steps'; // I concatenate a the stepsValue (line above) with th string ' steps' and assign to a new variable
-    stepsHandle.text = stepsString; // the string stepsString is being sent to the stepsHandle set at line 15
+    // Activity - Steps
+    let steps = (activity_today.adjusted["steps"] || 0);
+    let disp_steps = "";
+    if (steps === 0) {
+        disp_steps = "---";
+    } else {
+        disp_steps = numberWithCommas(monoDigits(steps));
+    }
+    label_steps.text = disp_steps;
+    // Activity - Calories
+    let calories = (activity_today.adjusted["calories"] || 0);
+    let disp_calories = "";
+    if (calories === 0) {
+        disp_calories = "---";
+    } else {
+        disp_calories = numberWithCommas(monoDigits(calories));
+    }
+    label_cals.text = disp_calories;
+    // Activity - Exercise time
+    let active = (activity_today.adjusted["activeMinutes"] || 0);
+    let disp_active = "";
+    if (active === 0) {
+        disp_active = "---";
+    } else {
+        disp_active = monoDigits(active);
+    }
+    label_active.text = disp_active;
+
+
+
+
+
+
 
     // Battery Measurement
     let batteryValue = battery.chargeLevel; // measure the battery level and send it to the variable batteryValue
