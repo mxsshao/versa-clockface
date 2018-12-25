@@ -9,9 +9,9 @@
   <text id="weather_location" x="219" y="61"/>
   <text id="weather_temp" x="219" y="38"/>
   <image id="weather_icon" href="" x="226" y="10"/>
-  <text id="label_time" x="231" y="152"/>
-  <text id="label_seconds" x="231" y="152"/>
-  <text id="label_ampm" x="287" y="110"/>
+  <text id="label_time" x="230" y="152"/>
+  <text id="label_seconds" x="230" y="152"/>
+  <text id="label_ampm" x="286" y="110"/>
   <text id="label_date" x="50%" y="186"/>
   <text id="label_steps" class="label_activity" x="45" y="284" fill="#bcd8f8"/>
   <text id="label_cals" class="label_activity" x="115" y="284" fill="#7898f8"/>

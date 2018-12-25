@@ -76,7 +76,7 @@ body.onreading = () => {
 body.start();
 
 let updateWeather = function() {
-    weather.fetch(1 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
+    weather.fetch(12 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
         .then(function(weather) {
             let location = weather.location;
             if (location.length > 18) {
