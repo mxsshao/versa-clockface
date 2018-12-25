@@ -4,21 +4,25 @@ import { preferences } from "user-settings"; // needed to get the user preferenc
 import { zeroPad, getDayName, getMonthName, monoDigits, numberWithCommas } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
 import { HeartRateSensor } from "heart-rate"; // import HR reading from sensor (seel line 18)
 import { battery } from "power"; // import battery level (see line26)
-import { today as activity_today} from "user-activity"; //adjusted types (matching the stats that you upload to fitbit.com, as opposed to local types)
+import { today as activity_today, goals} from "user-activity";
 
 // Update the clock every minute
 clock.granularity = "seconds"; //clock is refreshing every sec. It is possible to select minutes as well
 
 // Get a handle on the <text> elements specified in the index.gui file
-const label_time = document.getElementById("timeLabel");
+const label_time = document.getElementById("label_time");
 const label_seconds = document.getElementById("label_seconds");
 const label_ampm = document.getElementById("label_ampm");
 const label_date = document.getElementById("label_date");
-const batteryHandle = document.getElementById("batteryLabel");
+// const batteryHandle = document.getElementById("batteryLabel");
 const label_steps = document.getElementById("label_steps");
 const label_cals = document.getElementById("label_cals");
 const label_active = document.getElementById("label_active");
 const label_heart = document.getElementById("label_heart");
+const arc_steps = document.getElementById("arc_steps");
+const arc_cals = document.getElementById("arc_cals");
+const arc_active = document.getElementById("arc_active");
+const arc_heart = document.getElementById("arc_heart");
 
 // The following block read the heart rate from your watch
 const hrm = new HeartRateSensor();
@@ -31,8 +35,21 @@ hrm.onreading = function () {
     } else {
         disp_heart = monoDigits(heart);
     }
-    label_heart.text = `${disp_heart}`; // the measured HR is being sent to the heartrateHandle set at line 16
+    let angle_heart = ((heart - 50) / 110) * 360;
+    if (angle_heart > 360) {
+        angle_heart = 360;
+    } else if (angle_heart < 0) {
+        angle_heart = 0;
+    }
+    label_heart.text = disp_heart;
+    arc_heart.sweepAngle = angle_heart;
 }
+hrm.onerror = function() {
+    label_heart.text = "---";
+    arc_heart.sweepAngle = 0;
+}
+label_heart.text = "---";
+arc_heart.sweepAngle = 0;
 hrm.start();
 
 
@@ -79,31 +96,51 @@ clock.ontick = (evt) => {
 
     // Activity - Steps
     let steps = (activity_today.adjusted["steps"] || 0);
+    let goal_steps = (goals["steps"] || 0);
     let disp_steps = "";
     if (steps === 0) {
         disp_steps = "---";
     } else {
         disp_steps = numberWithCommas(monoDigits(steps));
     }
+    let angle_steps = (steps / goal_steps) * 360;
+    if (angle_steps > 360) {
+        angle_steps = 360;
+    }
     label_steps.text = disp_steps;
+    arc_steps.sweepAngle = angle_steps;
+
     // Activity - Calories
     let calories = (activity_today.adjusted["calories"] || 0);
+    let goal_calories = (goals["calories"] || 0);
     let disp_calories = "";
     if (calories === 0) {
         disp_calories = "---";
     } else {
         disp_calories = numberWithCommas(monoDigits(calories));
     }
+    let angle_calories = (calories / goal_calories) * 360;
+    if (angle_calories > 360) {
+        angle_calories = 360;
+    }
     label_cals.text = disp_calories;
+    arc_cals.sweepAngle = angle_calories;
+
     // Activity - Exercise time
     let active = (activity_today.adjusted["activeMinutes"] || 0);
+    let goal_active = (goals["activeMinutes"] || 0);
     let disp_active = "";
     if (active === 0) {
         disp_active = "---";
     } else {
         disp_active = monoDigits(active);
     }
+    let angle_active = (active / goal_active) * 360;
+    if (angle_active > 360) {
+        angle_active = 360;
+    }
     label_active.text = disp_active;
+    arc_active.sweepAngle = angle_active;
 
 
 
@@ -115,7 +152,7 @@ clock.ontick = (evt) => {
     let batteryValue = battery.chargeLevel; // measure the battery level and send it to the variable batteryValue
 
     // Assignment value battery
-    batteryHandle.text = `Batt: ${batteryValue} %`; // the string including the batteryValue is being sent to the batteryHandle set at line 14
+    // batteryHandle.text = `Batt: ${batteryValue} %`; // the string including the batteryValue is being sent to the batteryHandle set at line 14
 
 
 }
