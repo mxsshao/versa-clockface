@@ -84,3 +84,131 @@ export function numberWithCommas(x) {
         return x;
     }
 }
+
+export function getWeatherIcon(code, day) {
+    if (day) {
+        switch(code) {
+            case 200: return "weather/wi-day-thunderstorm.png";
+            case 201: return "weather/wi-day-thunderstorm.png";
+            case 202: return "weather/wi-day-thunderstorm.png";
+            case 210: return "weather/wi-day-lightning.png";
+            case 211: return "weather/wi-day-lightning.png";
+            case 212: return "weather/wi-day-lightning.png";
+            case 221: return "weather/wi-day-lightning.png";
+            case 230: return "weather/wi-day-thunderstorm.png";
+            case 231: return "weather/wi-day-thunderstorm.png";
+            case 232: return "weather/wi-day-thunderstorm.png";
+            case 300: return "weather/wi-day-sprinkle.png";
+            case 301: return "weather/wi-day-sprinkle.png";
+            case 302: return "weather/wi-day-rain.png";
+            case 310: return "weather/wi-day-rain.png";
+            case 311: return "weather/wi-day-rain.png";
+            case 312: return "weather/wi-day-rain.png";
+            case 313: return "weather/wi-day-rain.png";
+            case 314: return "weather/wi-day-rain.png";
+            case 321: return "weather/wi-day-sprinkle.png";
+            case 500: return "weather/wi-day-sprinkle.png";
+            case 501: return "weather/wi-day-rain.png";
+            case 502: return "weather/wi-day-rain.png";
+            case 503: return "weather/wi-day-rain.png";
+            case 504: return "weather/wi-day-rain.png";
+            case 511: return "weather/wi-day-rain-mix.png";
+            case 520: return "weather/wi-day-showers.png";
+            case 521: return "weather/wi-day-showers.png";
+            case 522: return "weather/wi-day-showers.png";
+            case 531: return "weather/wi-day-storm-showers.png";
+            case 600: return "weather/wi-day-snow.png";
+            case 601: return "weather/wi-day-sleet.png";
+            case 602: return "weather/wi-day-snow.png";
+            case 611: return "weather/wi-day-rain-mix.png";
+            case 612: return "weather/wi-day-rain-mix.png";
+            case 615: return "weather/wi-day-rain-mix.png";
+            case 616: return "weather/wi-day-rain-mix.png";
+            case 620: return "weather/wi-day-rain-mix.png";
+            case 621: return "weather/wi-day-snowcase .png";
+            case 622: return "weather/wi-day-snow.png";
+            case 701: return "weather/wi-day-showers.png";
+            case 711: return "weather/wi-smoke.png";
+            case 721: return "weather/wi-day-haze.png";
+            case 731: return "weather/wi-dust.png";
+            case 741: return "weather/wi-day-fog.png";
+            case 761: return "weather/wi-dust.png";
+            case 762: return "weather/wi-dust.png";
+            case 781: return "weather/wi-tornado.png";
+            case 800: return "weather/wi-day-sunny.png";
+            case 801: return "weather/wi-day-cloudy-gusts.png";
+            case 802: return "weather/wi-day-cloudy-gusts.png";
+            case 803: return "weather/wi-day-cloudy-gusts.png";
+            case 804: return "weather/wi-day-sunny-overcast.png";
+            case 900: return "weather/wi-tornado.png";
+            case 902: return "weather/wi-hurricane.png";
+            case 903: return "weather/wi-snowflake-cold.png";
+            case 904: return "weather/wi-hot.png";
+            case 906: return "weather/wi-day-hail.png";
+            case 957: return "weather/wi-strong-wind.png";
+            default: return "";
+        }
+    } else {
+        switch(code) {
+            case 200: return "weather/wi-night-alt-thunderstorm.png";
+            case 201: return "weather/wi-night-alt-thunderstorm.png";
+            case 202: return "weather/wi-night-alt-thunderstorm.png";
+            case 210: return "weather/wi-night-alt-lightning.png";
+            case 211: return "weather/wi-night-alt-lightning.png";
+            case 212: return "weather/wi-night-alt-lightning.png";
+            case 221: return "weather/wi-night-alt-lightning.png";
+            case 230: return "weather/wi-night-alt-thunderstorm.png";
+            case 231: return "weather/wi-night-alt-thunderstorm.png";
+            case 232: return "weather/wi-night-alt-thunderstorm.png";
+            case 300: return "weather/wi-night-alt-sprinkle.png";
+            case 301: return "weather/wi-night-alt-sprinkle.png";
+            case 302: return "weather/wi-night-alt-rain.png";
+            case 310: return "weather/wi-night-alt-rain.png";
+            case 311: return "weather/wi-night-alt-rain.png";
+            case 312: return "weather/wi-night-alt-rain.png";
+            case 313: return "weather/wi-night-alt-rain.png";
+            case 314: return "weather/wi-night-alt-rain.png";
+            case 321: return "weather/wi-night-alt-sprinkle.png";
+            case 500: return "weather/wi-night-alt-sprinkle.png";
+            case 501: return "weather/wi-night-alt-rain.png";
+            case 502: return "weather/wi-night-alt-rain.png";
+            case 503: return "weather/wi-night-alt-rain.png";
+            case 504: return "weather/wi-night-alt-rain.png";
+            case 511: return "weather/wi-night-alt-rain-mix.png";
+            case 520: return "weather/wi-night-alt-showers.png";
+            case 521: return "weather/wi-night-alt-showers.png";
+            case 522: return "weather/wi-night-alt-showers.png";
+            case 531: return "weather/wi-night-alt-storm-showers.png";
+            case 600: return "weather/wi-night-alt-snow.png";
+            case 601: return "weather/wi-night-alt-sleet.png";
+            case 602: return "weather/wi-night-alt-snow.png";
+            case 611: return "weather/wi-night-alt-rain-mix.png";
+            case 612: return "weather/wi-night-alt-rain-mix.png";
+            case 615: return "weather/wi-night-alt-rain-mix.png";
+            case 616: return "weather/wi-night-alt-rain-mix.png";
+            case 620: return "weather/wi-night-alt-rain-mix.png";
+            case 621: return "weather/wi-night-alt-snow.png";
+            case 622: return "weather/wi-night-alt-snow.png";
+            case 701: return "weather/wi-night-alt-showers.png";
+            case 711: return "weather/wi-smoke.png";
+            case 721: return "weather/wi-day-haze.png";
+            case 731: return "weather/wi-dust.png";
+            case 741: return "weather/wi-night-fog.png";
+            case 761: return "weather/wi-dust.png";
+            case 762: return "weather/wi-dust.png";
+            case 781: return "weather/wi-tornado.png";
+            case 800: return "weather/wi-night-clear.png";
+            case 801: return "weather/wi-night-alt-cloudy-gusts.png";
+            case 802: return "weather/wi-night-alt-cloudy-gusts.png";
+            case 803: return "weather/wi-night-alt-cloudy-gusts.png";
+            case 804: return "weather/wi-night-alt-cloudy.png";
+            case 900: return "weather/wi-tornado.png";
+            case 902: return "weather/wi-hurricane.png";
+            case 903: return "weather/wi-snowflake-cold.png";
+            case 904: return "weather/wi-hot.png";
+            case 906: return "weather/wi-night-alt-hail.png";
+            case 957: return "weather/wi-strong-wind.png";
+            default: return "";
+        }
+    }
+}

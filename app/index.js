@@ -1,10 +1,10 @@
 import clock from "clock"; // needed to have a clock! (see line 33)
 import document from "document"; // needed for I have no idea what! If you don't put this nothing works!!!
 import { preferences } from "user-settings"; // needed to get the user preference 12h or 24h (see line 38)
-import { zeroPad, getDayName, getMonthName, monoDigits, numberWithCommas } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
+import { getDayName, getMonthName, monoDigits, numberWithCommas, getWeatherIcon } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
 import { HeartRateSensor } from "heart-rate"; // import HR reading from sensor (seel line 18)
 import { BodyPresenceSensor } from "body-presence";
-import { battery } from "power"; // import battery level (see line26)
+import { battery, charger } from "power"; // import battery level (see line26)
 import { today as activity_today, goals} from "user-activity";
 import { display } from "display";
 import * as weather from "fitbit-weather/app";
@@ -13,8 +13,16 @@ import * as weather from "fitbit-weather/app";
 clock.granularity = "seconds";
 
 // Get a handle on the elements specified in the index.gui file
+const label_battery = document.getElementById("label_battery");
+const battery_base_1 = document.getElementById("battery_base_1");
+const battery_base_2 = document.getElementById("battery_base_2");
+const battery_1 = document.getElementById("battery_1");
+const battery_2 = document.getElementById("battery_2");
+const battery_3 = document.getElementById("battery_3");
+const battery_4 = document.getElementById("battery_4");
 const weather_location = document.getElementById("weather_location");
 const weather_temp = document.getElementById("weather_temp");
+const weather_icon = document.getElementById("weather_icon");
 const label_time = document.getElementById("label_time");
 const label_seconds = document.getElementById("label_seconds");
 const label_ampm = document.getElementById("label_ampm");
@@ -70,10 +78,17 @@ body.start();
 let updateWeather = function() {
     weather.fetch(12 * 60 * 1000) // return the cached value if it is less than 30 minutes old 
         .then(function(weather) {
-            weather_location.text = weather.location;
+            let location = weather.location;
+            if (location.length > 18) {
+                let x = location.substr(0, 14);
+                x = x.replace(/\s$/, "")
+                location = x + "...";
+            }
+            weather_location.text = location;
             let temp = weather.temperatureC;
             let disp_temp = monoDigits(temp.toFixed(1));
             weather_temp.text = `${disp_temp}°C`;
+            weather_icon.href = getWeatherIcon(weather.realConditionCode, weather.isDay);
             console.log(JSON.stringify(weather));
         })
         .catch(error => console.log(JSON.stringify(error)));
@@ -87,7 +102,7 @@ display.onchange = function () {
     }
 }
 
-// Update the <text> element every tick with the current time
+// Update handler each tick
 clock.ontick = (evt) => {
     const now = evt.date; // get the actual instant
     let hours = now.getHours(); // separate the actual hours from the instant "now"
@@ -181,10 +196,62 @@ clock.ontick = (evt) => {
     // }
 
     // Battery Measurement
-    let batteryValue = battery.chargeLevel; // measure the battery level and send it to the variable batteryValue
-
-    // Assignment value battery
-    // batteryHandle.text = `Batt: ${batteryValue} %`; // the string including the batteryValue is being sent to the batteryHandle set at line 14
-
-
+    let batt = Math.floor(battery.chargeLevel);
+    let disp_batt = "";
+    if (batt > 0) {
+        disp_batt = monoDigits(batt, false) + "%";
+    }
+    label_battery.text = disp_batt;
+    if (!charger.connected) {
+        if (batt > 75) {
+            battery_base_1.style.visibility = "visible";
+            battery_base_2.style.visibility = "visible";
+            battery_1.style.visibility = "visible";
+            battery_2.style.visibility = "visible";
+            battery_3.style.visibility = "visible";
+            battery_4.style.visibility = "visible";
+            battery_1.style.fill = "#a0a0a0";
+            battery_2.style.fill = "#a0a0a0";
+        } else if (batt > 50) {
+            battery_base_1.style.visibility = "visible";
+            battery_base_2.style.visibility = "visible";
+            battery_1.style.visibility = "visible";
+            battery_2.style.visibility = "visible";
+            battery_3.style.visibility = "visible";
+            battery_4.style.visibility = "hidden";
+            battery_1.style.fill = "#a0a0a0";
+            battery_2.style.fill = "#a0a0a0";
+        } else if (batt > 25) {
+            battery_base_1.style.visibility = "visible";
+            battery_base_2.style.visibility = "visible";
+            battery_1.style.visibility = "visible";
+            battery_2.style.visibility = "visible";
+            battery_3.style.visibility = "hidden";
+            battery_4.style.visibility = "hidden";
+            battery_1.style.fill = "#ccac28";
+            battery_2.style.fill = "#ccac28";
+        } else if (batt > 16) {
+            battery_base_1.style.visibility = "visible";
+            battery_base_2.style.visibility = "visible";
+            battery_1.style.visibility = "visible";
+            battery_2.style.visibility = "hidden";
+            battery_3.style.visibility = "hidden";
+            battery_4.style.visibility = "hidden";
+            battery_1.style.fill = "#c63033";
+        } else {
+            battery_base_1.style.visibility = "hidden";
+            battery_base_2.style.visibility = "hidden";
+            battery_1.style.visibility = "hidden";
+            battery_2.style.visibility = "hidden";
+            battery_3.style.visibility = "hidden";
+            battery_4.style.visibility = "hidden";
+        }
+    } else {
+        battery_base_1.style.visibility = "hidden";
+        battery_base_2.style.visibility = "hidden";
+        battery_1.style.visibility = "hidden";
+        battery_2.style.visibility = "hidden";
+        battery_3.style.visibility = "hidden";
+        battery_4.style.visibility = "hidden";
+    }
 }

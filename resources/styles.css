@@ -3,23 +3,37 @@
 }
 
 #weather_location {
-  font-size: 22;
+  font-size: 16;
   font-family: System-Regular;
-  text-length: 20;
-  text-anchor: start;
-  fill: whitesmoke;
+  text-length: 18;
+  text-anchor: end;
+  fill: #a0a0a0;
 }
 
 #weather_temp {
-  font-size: 22;
+  font-size: 30;
   font-family: System-Regular;
   text-length: 7;
-  text-anchor: start;
+  text-anchor: end;
   fill: whitesmoke;
 }
 
+#weather_icon {
+  width: 64;
+  height: 64;
+  fill: whitesmoke;
+}
+
+#label_battery {
+  font-size: 16;
+  font-family: System-Regular;
+  text-length: 4;
+  text-anchor: middle;
+  fill: #a0a0a0;  
+}
+
 #label_time {
-  font-size: 90;
+  font-size: 92;
   font-family: System-Regular;
   text-length: 5;
   text-anchor: end;
@@ -27,7 +41,7 @@
 }
 
 #label_seconds {
-  font-size: 46;
+  font-size: 48;
   font-family: System-Regular;
   text-length: 3;
   text-anchor: start;
@@ -51,8 +65,8 @@
 }
 
 .arc_back {
-  width: 50;
-  height: 50;
+  width: 46;
+  height: 46;
   arc-width: 3;
   start-angle: 0;
   sweep-angle: 360;
@@ -60,8 +74,8 @@
 }
 
 .arc_front {
-  width: 50;
-  height: 50;
+  width: 46;
+  height: 46;
   arc-width: 3;
   start-angle: 0;
   sweep-angle: 0;
