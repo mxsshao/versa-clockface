@@ -38,5 +38,10 @@ function hex2a(hex) {
 }
 
 export function numberWithCommas(x) {
-    return x.replace(/\B(?=(.{3})+(?!.))/g, ",");
+    if (x.length > 3) {
+        let position = x.length - 3;
+        return x.substr(0, position) + "," + x.substr(position);
+    } else {
+        return x;
+    }
 }

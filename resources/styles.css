@@ -3,22 +3,36 @@
 }
 
 #timeLabel {
-  font-size: 76;
+  font-size: 80;
   font-family: System-Regular;
-  text-length: 8;
-  text-anchor: middle;
-  x: 50%;
+  text-length: 5;
+  text-anchor: end;
+  x: 225;
   y: 150;
   fill: whitesmoke;
 }
 
-#dateLabel {
+#label_seconds {
+  font-size: 36;
+  font-family: System-Regular;
+  text-length: 3;
+  text-anchor: start;
+  fill: whitesmoke;
+}
+
+#label_ampm {
+  font-size: 26;
+  font-family: System-Regular;
+  text-length: 3;
+  text-anchor: start;
+  fill: #a0a0a0;
+}
+
+#label_date {
   font-size: 26;
   font-family: System-Regular;
   text-length: 30;
   text-anchor: middle;
-  x: 50%;
-  y: 189;
   fill: whitesmoke;
 }
 

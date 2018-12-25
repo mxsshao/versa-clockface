@@ -11,12 +11,14 @@ clock.granularity = "seconds"; //clock is refreshing every sec. It is possible t
 
 // Get a handle on the <text> elements specified in the index.gui file
 const label_time = document.getElementById("timeLabel");
+const label_seconds = document.getElementById("label_seconds");
+const label_ampm = document.getElementById("label_ampm");
+const label_date = document.getElementById("label_date");
 const batteryHandle = document.getElementById("batteryLabel");
 const label_steps = document.getElementById("label_steps");
 const label_cals = document.getElementById("label_cals");
 const label_active = document.getElementById("label_active");
 const label_heart = document.getElementById("label_heart");
-const dateHandle = document.getElementById("dateLabel");
 
 // The following block read the heart rate from your watch
 const hrm = new HeartRateSensor();
@@ -44,9 +46,21 @@ clock.ontick = (evt) => {
     let date = now.getDate();
     let month = now.getMonth();
     
+    let ampm = "";
+
     // Check 12 or 24 hours
     if (preferences.clockDisplay === "12h") {
-        hours = hours % 12 || 12;
+        if (hours > 12){
+            ampm = "PM";
+            hours -= 12;
+        } else if (hours == 12){
+            ampm = "PM"
+        } else if (hours == 0) {
+            ampm = "AM";
+            hours += 12;
+        } else {
+            ampm = "AM";
+        }
     }
 
     // Format numbers for display
@@ -55,11 +69,13 @@ clock.ontick = (evt) => {
     let disp_secs = monoDigits(zeroPad(secs));
 
     // Time in format hh:mm:ss
-    label_time.text = `${disp_hours}:${disp_mins}:${disp_secs}`;
+    label_time.text = `${disp_hours}:${disp_mins}`;
+    label_seconds.text = `:${disp_secs}`;
+    label_ampm.text = ampm;
 
-    let dayName = getDayName(day);
-    let monthName = getMonthName(month);
-    dateHandle.text = `${dayName} ${date} ${monthName}`;
+    let disp_day = getDayName(day);
+    let disp_month = getMonthName(month);
+    label_date.text = `${disp_day} ${date} ${disp_month}`;
 
     // Activity - Steps
     let steps = (activity_today.adjusted["steps"] || 0);
