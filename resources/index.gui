@@ -5,10 +5,10 @@
   <rect id="battery_2" x="20" y="13" width="4" height="12" fill="#a0a0a0"/>
   <rect id="battery_3" x="27" y="13" width="4" height="12" fill="#a0a0a0"/>
   <rect id="battery_4" x="34" y="13" width="4" height="12" fill="#a0a0a0"/>
-  <text id="label_battery" x="27" y="45"/>
-  <text id="weather_location" x="219" y="63"/>
-  <text id="weather_temp" x="219" y="45"/>
-  <image id="weather_icon" href="" x="226" y="12"/>
+  <text id="label_battery" x="10" y="47"/>
+  <text id="weather_location" x="219" y="61"/>
+  <text id="weather_temp" x="219" y="38"/>
+  <image id="weather_icon" href="" x="226" y="10"/>
   <text id="label_time" x="231" y="152"/>
   <text id="label_seconds" x="231" y="152"/>
   <text id="label_ampm" x="287" y="110"/>

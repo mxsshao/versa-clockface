@@ -3,7 +3,7 @@
 }
 
 #weather_location {
-  font-size: 16;
+  font-size: 20;
   font-family: System-Regular;
   text-length: 18;
   text-anchor: end;
@@ -25,10 +25,10 @@
 }
 
 #label_battery {
-  font-size: 16;
+  font-size: 20;
   font-family: System-Regular;
   text-length: 4;
-  text-anchor: middle;
+  text-anchor: start;
   fill: #a0a0a0;  
 }
 

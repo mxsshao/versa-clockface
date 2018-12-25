@@ -76,7 +76,7 @@ body.onreading = () => {
 body.start();
 
 let updateWeather = function() {
-    weather.fetch(12 * 60 * 1000) // return the cached value if it is less than 30 minutes old 
+    weather.fetch(1 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
         .then(function(weather) {
             let location = weather.location;
             if (location.length > 18) {
@@ -89,7 +89,7 @@ let updateWeather = function() {
             let disp_temp = monoDigits(temp.toFixed(1));
             weather_temp.text = `${disp_temp}°C`;
             weather_icon.href = getWeatherIcon(weather.realConditionCode, weather.isDay);
-            console.log(JSON.stringify(weather));
+            //console.log(JSON.stringify(weather));
         })
         .catch(error => console.log(JSON.stringify(error)));
 }
