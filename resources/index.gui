@@ -3,7 +3,7 @@
   <text id="weather_temp" x="0" y="50"/>
   <text id="label_time" x="230" y="150"/>
   <text id="label_seconds" x="230" y="150"/>
-  <text id="label_ampm" x="285" y="109"/>
+  <text id="label_ampm" x="285" y="110"/>
   <text id="label_date" x="50%" y="185"/>
   <text id="label_steps" class="label_activity" x="45" y="285" fill="#bcd8f8"/>
   <text id="label_cals" class="label_activity" x="115" y="285" fill="#7898f8"/>
@@ -21,5 +21,5 @@
   <arc class="arc_front" id="arc_cals" x="90" y="214" fill="#7898f8"/>
   <arc class="arc_front" id="arc_active" x="160" y="214" fill="#d893ff"/>
   <arc class="arc_front" id="arc_heart" x="230" y="214" fill="#f83c40"/>
-  <rect x="0" y="198" width="100%" height="3" fill="#fc6b3a" />
+  <rect x="0" y="198" width="100%" height="3" fill="#fc6b3a"/>
 </svg>

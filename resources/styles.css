@@ -13,7 +13,7 @@
 #weather_temp {
   font-size: 22;
   font-family: System-Regular;
-  text-length: 20;
+  text-length: 7;
   text-anchor: start;
   fill: whitesmoke;
 }

@@ -3,6 +3,7 @@ import document from "document"; // needed for I have no idea what! If you don't
 import { preferences } from "user-settings"; // needed to get the user preference 12h or 24h (see line 38)
 import { zeroPad, getDayName, getMonthName, monoDigits, numberWithCommas } from "../common/utils"; // import user function zeroPad (see lines 43, 45, 46)
 import { HeartRateSensor } from "heart-rate"; // import HR reading from sensor (seel line 18)
+import { BodyPresenceSensor } from "body-presence";
 import { battery } from "power"; // import battery level (see line26)
 import { today as activity_today, goals} from "user-activity";
 import { display } from "display";
@@ -27,8 +28,9 @@ const arc_cals = document.getElementById("arc_cals");
 const arc_active = document.getElementById("arc_active");
 const arc_heart = document.getElementById("arc_heart");
 
-// The following block read the heart rate from your watch
+// Heart rate and body sensors
 const hrm = new HeartRateSensor();
+const body = new BodyPresenceSensor();
 
 hrm.onreading = function () {
     let heart = (hrm.heartRate || 0)
@@ -53,14 +55,24 @@ hrm.onerror = function() {
 }
 label_heart.text = "---";
 arc_heart.sweepAngle = 0;
-hrm.start();
+
+body.onreading = () => {
+    if (!body.present) {
+        label_heart.text = "---";
+        arc_heart.sweepAngle = 0;
+        hrm.stop();
+    } else {
+        hrm.start();
+    }
+};
+body.start();
 
 let updateWeather = function() {
-    weather.fetch(1 * 60 * 1000) // return the cached value if it is less than 30 minutes old 
+    weather.fetch(12 * 60 * 1000) // return the cached value if it is less than 30 minutes old 
         .then(function(weather) {
             weather_location.text = weather.location;
-            temp = weather.temperatureC;
-            disp_temp = monoDigits(temp.toFixed(1));
+            let temp = weather.temperatureC;
+            let disp_temp = monoDigits(temp.toFixed(1));
             weather_temp.text = `${disp_temp}°C`;
             console.log(JSON.stringify(weather));
         })
