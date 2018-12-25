@@ -5,16 +5,19 @@ import { zeroPad, getDayName, getMonthName, monoDigits, numberWithCommas } from 
 import { HeartRateSensor } from "heart-rate"; // import HR reading from sensor (seel line 18)
 import { battery } from "power"; // import battery level (see line26)
 import { today as activity_today, goals} from "user-activity";
+import { display } from "display";
+import * as weather from "fitbit-weather/app";
 
-// Update the clock every minute
-clock.granularity = "seconds"; //clock is refreshing every sec. It is possible to select minutes as well
+// Update the clock every second
+clock.granularity = "seconds";
 
-// Get a handle on the <text> elements specified in the index.gui file
+// Get a handle on the elements specified in the index.gui file
+const weather_location = document.getElementById("weather_location");
+const weather_temp = document.getElementById("weather_temp");
 const label_time = document.getElementById("label_time");
 const label_seconds = document.getElementById("label_seconds");
 const label_ampm = document.getElementById("label_ampm");
 const label_date = document.getElementById("label_date");
-// const batteryHandle = document.getElementById("batteryLabel");
 const label_steps = document.getElementById("label_steps");
 const label_cals = document.getElementById("label_cals");
 const label_active = document.getElementById("label_active");
@@ -33,7 +36,7 @@ hrm.onreading = function () {
     if (heart === 0) {
         disp_heart = "---";
     } else {
-        disp_heart = monoDigits(heart);
+        disp_heart = monoDigits(heart, false);
     }
     let angle_heart = ((heart - 50) / 110) * 360;
     if (angle_heart > 360) {
@@ -52,6 +55,25 @@ label_heart.text = "---";
 arc_heart.sweepAngle = 0;
 hrm.start();
 
+let updateWeather = function() {
+    weather.fetch(1 * 60 * 1000) // return the cached value if it is less than 30 minutes old 
+        .then(function(weather) {
+            weather_location.text = weather.location;
+            temp = weather.temperatureC;
+            disp_temp = monoDigits(temp.toFixed(1));
+            weather_temp.text = `${disp_temp}°C`;
+            console.log(JSON.stringify(weather));
+        })
+        .catch(error => console.log(JSON.stringify(error)));
+}
+
+updateWeather();
+
+display.onchange = function () {
+    if (display.on) {
+        updateWeather();
+    }
+}
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
@@ -81,9 +103,9 @@ clock.ontick = (evt) => {
     }
 
     // Format numbers for display
-    let disp_hours = monoDigits(zeroPad(hours));
-    let disp_mins = monoDigits(zeroPad(mins));
-    let disp_secs = monoDigits(zeroPad(secs));
+    let disp_hours = monoDigits(hours);
+    let disp_mins = monoDigits(mins);
+    let disp_secs = monoDigits(secs);
 
     // Time in format hh:mm:ss
     label_time.text = `${disp_hours}:${disp_mins}`;
@@ -101,7 +123,7 @@ clock.ontick = (evt) => {
     if (steps === 0) {
         disp_steps = "---";
     } else {
-        disp_steps = numberWithCommas(monoDigits(steps));
+        disp_steps = numberWithCommas(monoDigits(steps, false));
     }
     let angle_steps = (steps / goal_steps) * 360;
     if (angle_steps > 360) {
@@ -117,7 +139,7 @@ clock.ontick = (evt) => {
     if (calories === 0) {
         disp_calories = "---";
     } else {
-        disp_calories = numberWithCommas(monoDigits(calories));
+        disp_calories = numberWithCommas(monoDigits(calories, false));
     }
     let angle_calories = (calories / goal_calories) * 360;
     if (angle_calories > 360) {
@@ -133,7 +155,7 @@ clock.ontick = (evt) => {
     if (active === 0) {
         disp_active = "---";
     } else {
-        disp_active = monoDigits(active);
+        disp_active = monoDigits(active, false);
     }
     let angle_active = (active / goal_active) * 360;
     if (angle_active > 360) {
@@ -142,11 +164,9 @@ clock.ontick = (evt) => {
     label_active.text = disp_active;
     arc_active.sweepAngle = angle_active;
 
-
-
-
-
-
+    // if (secs === 0) {
+    //     updateWeather();
+    // }
 
     // Battery Measurement
     let batteryValue = battery.chargeLevel; // measure the battery level and send it to the variable batteryValue

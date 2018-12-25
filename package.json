@@ -17,7 +17,7 @@
       "access_activity",
       "access_heart_rate",
       "access_location"
-	],
+    ],
     "buildTargets": [
       "meson"
     ],
@@ -27,5 +27,8 @@
   "scripts": {
     "build": "fitbit-build",
     "debug": "fitbit"
+  },
+  "dependencies": {
+    "fitbit-weather": "^0.2.0"
   }
 }

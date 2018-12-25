@@ -1,12 +1,14 @@
 <svg class="background">
+  <text id="weather_location" x="0" y="30"/>
+  <text id="weather_temp" x="0" y="50"/>
   <text id="label_time" x="230" y="150"/>
   <text id="label_seconds" x="230" y="150"/>
   <text id="label_ampm" x="285" y="109"/>
   <text id="label_date" x="50%" y="185"/>
-  <text id="label_steps" x="45" y="285"/>
-  <text id="label_cals" x="115" y="285"/>
-  <text id="label_active" x="185" y="285"/>
-  <text id="label_heart" x="255" y="285"/>
+  <text id="label_steps" class="label_activity" x="45" y="285" fill="#bcd8f8"/>
+  <text id="label_cals" class="label_activity" x="115" y="285" fill="#7898f8"/>
+  <text id="label_active" class="label_activity" x="185" y="285" fill="#d893ff"/>
+  <text id="label_heart" class="label_activity" x="255" y="285" fill="#f83c40"/>
   <image class="icon_activity" href="icons/stat_steps_solid_24px.png" x="33" y="227" fill="#bcd8f8"/>
   <image class="icon_activity" href="icons/stat_cals_solid_24px.png" x="103" y="227" fill="#7898f8"/>
   <image class="icon_activity" href="icons/stat_am_solid_24px.png" x="173" y="227" fill="#d893ff"/>

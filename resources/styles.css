@@ -2,6 +2,22 @@
   viewport-fill: black;
 }
 
+#weather_location {
+  font-size: 22;
+  font-family: System-Regular;
+  text-length: 20;
+  text-anchor: start;
+  fill: whitesmoke;
+}
+
+#weather_temp {
+  font-size: 22;
+  font-family: System-Regular;
+  text-length: 20;
+  text-anchor: start;
+  fill: whitesmoke;
+}
+
 #label_time {
   font-size: 90;
   font-family: System-Regular;
@@ -67,32 +83,9 @@
   fill: blue;
 }
 
-
-#label_steps {
+.label_activity {
   font-size: 22;
   font-family: System-Regular;
   text-length: 10;
   text-anchor: middle;
-  fill: #bcd8f8;
-}
-#label_cals {
-  font-size: 22;
-  font-family: System-Regular;
-  text-length: 10;
-  text-anchor: middle;
-  fill: #7898f8;
-}
-#label_active {
-  font-size: 22;
-  font-family: System-Regular;
-  text-length: 10;
-  text-anchor: middle;
-  fill: #d893ff;
-}
-#label_heart {
-  font-size: 22;
-  font-family: System-Regular;
-  text-length: 10;
-  text-anchor: middle;
-  fill: #f83c40;
 }
