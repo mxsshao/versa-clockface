@@ -6,9 +6,9 @@
   <rect id="battery_3" x="27" y="13" width="4" height="12" fill="#a0a0a0"/>
   <rect id="battery_4" x="34" y="13" width="4" height="12" fill="#a0a0a0"/>
   <text id="label_battery" x="10" y="47"/>
-  <text id="weather_location" x="219" y="61"/>
-  <text id="weather_temp" x="219" y="38"/>
-  <image id="weather_icon" href="" x="226" y="10"/>
+  <text id="weather_location" x="222" y="61"/>
+  <text id="weather_temp" x="222" y="38"/>
+  <image id="weather_icon" href="" x="228" y="4"/>
   <text id="label_time" x="230" y="152"/>
   <text id="label_seconds" x="230" y="152"/>
   <text id="label_ampm" x="286" y="110"/>
@@ -20,7 +20,7 @@
   <image class="icon_activity" href="icons/stat_steps_solid_24px.png" x="33" y="225" fill="#bcd8f8"/>
   <image class="icon_activity" href="icons/stat_cals_solid_24px.png" x="103" y="225" fill="#7898f8"/>
   <image class="icon_activity" href="icons/stat_am_solid_24px.png" x="173" y="225" fill="#d893ff"/>
-  <image class="icon_activity" href="icons/stat_hr_solid_24px.png" x="243" y="227" fill="#f83c40"/>
+  <image class="icon_activity" href="icons/stat_hr_solid_24px.png" x="243" y="226" fill="#f83c40"/>
   <arc class="arc_back" x="22" y="214"/>
   <arc class="arc_back" x="92" y="214"/>
   <arc class="arc_back" x="162" y="214"/>

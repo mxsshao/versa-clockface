@@ -88,7 +88,9 @@ let updateWeather = function() {
             let temp = weather.temperatureC;
             let disp_temp = monoDigits(temp.toFixed(1));
             weather_temp.text = `${disp_temp}°C`;
-            weather_icon.href = getWeatherIcon(weather.realConditionCode, weather.isDay);
+            let now = Date.now();
+            let is_day = (now > weather.sunrise && now < weather.sunset);
+            weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
             //console.log(JSON.stringify(weather));
         })
         .catch(error => console.log(JSON.stringify(error)));
@@ -203,7 +205,7 @@ clock.ontick = (evt) => {
     }
     label_battery.text = disp_batt;
     if (!charger.connected) {
-        if (batt > 75) {
+        if (batt > 85) {
             battery_base_1.style.visibility = "visible";
             battery_base_2.style.visibility = "visible";
             battery_1.style.visibility = "visible";
@@ -212,7 +214,7 @@ clock.ontick = (evt) => {
             battery_4.style.visibility = "visible";
             battery_1.style.fill = "#a0a0a0";
             battery_2.style.fill = "#a0a0a0";
-        } else if (batt > 50) {
+        } else if (batt > 60) {
             battery_base_1.style.visibility = "visible";
             battery_base_2.style.visibility = "visible";
             battery_1.style.visibility = "visible";
@@ -221,7 +223,7 @@ clock.ontick = (evt) => {
             battery_4.style.visibility = "hidden";
             battery_1.style.fill = "#a0a0a0";
             battery_2.style.fill = "#a0a0a0";
-        } else if (batt > 25) {
+        } else if (batt > 35) {
             battery_base_1.style.visibility = "visible";
             battery_base_2.style.visibility = "visible";
             battery_1.style.visibility = "visible";
