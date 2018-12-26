@@ -88,10 +88,26 @@ let updateWeather = function() {
             let temp = weather.temperatureC;
             let disp_temp = monoDigits(temp.toFixed(1));
             weather_temp.text = `${disp_temp}°C`;
-            let now = Date.now();
-            let is_day = (now > weather.sunrise && now < weather.sunset);
+
+            // Workaround to deal with openweathermap date quirks.
+            // OWM gives sunrise/sunset in UTC time but gives the wrong date.
+            let now = new Date();
+            let c_now = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            // Convert sunrise and sunset into local time.
+            let sunrise = new Date(0);
+            sunrise.setUTCMilliseconds(weather.sunrise);
+            let sunset = new Date(0);
+            sunset.setUTCMilliseconds(weather.sunset);
+            // Compare the time only since date is incorrect.
+            let c_sunrise = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
+            let c_sunset = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
+            let is_day = (c_now > c_sunrise && c_now < c_sunset);
             weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
-            //console.log(JSON.stringify(weather));
+            
+            // console.log(c_now);
+            // console.log(c_sunrise);
+            // console.log(c_sunset);
+            // console.log(JSON.stringify(weather));
         })
         .catch(error => console.log(JSON.stringify(error)));
 }
