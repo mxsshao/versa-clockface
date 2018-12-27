@@ -1,5 +1,7 @@
 # Clockface for Fitbit Versa
 
+![screenshot](/screenshots/watchface.png)
+
 ## Development
 
 ```javascript
