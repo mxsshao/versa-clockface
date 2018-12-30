@@ -16,7 +16,11 @@ fitbit$ build
 fitbit$ install
 ```
 
+### Weather
+
++ Weather from <https://openweathermap.org>
+
 ## Dependencies
 
-* <https://github.com/gregoiresage/fitbit-weather>
-* <https://github.com/erikflowers/weather-icons>
++ <https://github.com/gregoiresage/fitbit-weather>
++ <https://github.com/erikflowers/weather-icons>
