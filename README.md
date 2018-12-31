@@ -1,6 +1,9 @@
 # Clockface for Fitbit Versa "Illium Essentials"
 
+## Screenshots
+
 ![screenshot](/screenshots/watchface.png)
+![screenshot](/screenshots/watchface-alt.png)
 
 ## Development
 
