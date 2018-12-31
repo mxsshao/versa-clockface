@@ -1,71 +1,48 @@
-const colorSet = [
-    {color: "black"},
-    {color: "darkslategrey"},
-    {color: "dimgrey"},
-    {color: "grey"},
-    {color: "lightgrey"},
-    {color: "beige"},
-    {color: "white"},
-    {color: "maroon"},
-    {color: "saddlebrown"},
-    {color: "darkgoldenrod"},
-    {color: "goldenrod"},
-    {color: "rosybrown"},
-    {color: "wheat"},
-    {color: "navy"},
-    {color: "blue"},
-    {color: "dodgerblue"},
-    {color: "deepskyblue"},
-    {color: "aquamarine"},
-    {color: "cyan"},
-    {color: "olive"},
-    {color: "darkgreen"},
-    {color: "green"},
-    {color: "springgreen"},
-    {color: "limegreen"},
-    {color: "palegreen"},
-    {color: "lime"},
-    {color: "greenyellow"},
-    {color: "darkslateblue"},
-    {color: "slateblue"},
-    {color: "purple"},
-    {color: "fuchsia"},
-    {color: "plum"},
-    {color: "orchid"},
-    {color: "lavender"},
-    {color: "darkkhaki"},
-    {color: "khaki"},
-    {color: "lemonchiffon"},
-    {color: "yellow"},
-    {color: "gold"},
-    {color: "orangered"},
-    {color: "orange"},
-    {color: "coral"},
-    {color: "lightpink"},
-    {color: "palevioletred"},
-    {color: "deeppink"},
-    {color: "darkred"},
-    {color: "crimson"},
-    {color: "red"}       
-  ];
+const color_set = [
+  {color: "#FFFFFF"},   
+  {color: "#A0A0A0"},  
+  {color: "#505050"},  
+  {color: "#303030"},  
+  {color: "#000000"},    
+    
+  {color: "#E4FA3C"}, 
+  {color: "#FFCC33"}, 
+  {color: "#FC6B3A"}, 
+  {color: "#F83C40"}, 
+  {color: "#F80070"}, 
+  {color: "#F83478"},
+  {color: "#A51E7C"}, 
+  {color: "#D828B8"}, 
+  {color: "#BD4EFC"}, 
+  {color: "#5B4CFF"}, 
+  {color: "#8080FF"},
+  {color: "#7090B5"}, 
+  {color: "#BCD8F8"}, 
+  {color: "#3182DE"}, 
+  {color: "#14D3F5"}, 
+  {color: "#3BF7DE"}, 
+  {color: "#00A629"}, 
+  {color: "#5BE37D"}, 
+  {color: "#B8FC68"}, 
+];
   
-  const options = [
-    ['Line Color', 'color_line'],
-  ];
-  
-  function mySettings(props) {
-    return (
-      <Page>
-        <Section title="Options">
-          <Toggle settingsKey="fahrenheit" label="Use Fahrenheit"/>
+const options = [
+  ['Line Color', 'color_line'],
+];
+
+function mySettings(props) {
+  return (
+    <Page>
+      <Section title="Options">
+        <Toggle settingsKey="fahrenheit" label="Use Fahrenheit"/>
+      </Section>
+      {options.map(([title, settingsKey]) =>
+        <Section title={title}>
+          <ColorSelect settingsKey={settingsKey} colors={color_set} />
         </Section>
-        {options.map(([title, settingsKey]) =>
-          <Section title={title}>
-            <ColorSelect settingsKey={settingsKey} colors={colorSet} />
-          </Section>
-        )}
-      </Page>
-    );
-  }
-  
-  registerSettingsPage(mySettings);
+      )}
+    </Page>
+  );
+}
+
+registerSettingsPage(mySettings);

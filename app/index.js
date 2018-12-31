@@ -90,14 +90,14 @@ let updateWeather = function() {
             }
             weather_location.text = location;
 
-            let temp;
+            let temp, disp_temp;
             if (fahrenheit) {
                 temp = weather.temperatureF;
-                let disp_temp = monoDigits(temp.toFixed(1));
+                disp_temp = monoDigits(temp.toFixed(1));
                 weather_temp.text = `${disp_temp}°F`;
             } else {
                 temp = weather.temperatureC; 
-                let disp_temp = monoDigits(temp.toFixed(1));
+                disp_temp = monoDigits(temp.toFixed(1));
                 weather_temp.text = `${disp_temp}°C`;
             }
 
@@ -124,8 +124,6 @@ let updateWeather = function() {
         .catch(error => console.log(JSON.stringify(error)));
 }
 
-updateWeather();
-
 display.onchange = function () {
     if (display.on) {
         updateWeather();
@@ -145,11 +143,10 @@ function settingsCallback(data) {
     }
     if (data.fahrenheit) {
         fahrenheit = true;
-        updateWeather();
     } else {
         fahrenheit = false;
-        updateWeather();
     }
+    updateWeather();
 }
 simple_settings.initialize(settingsCallback);
 
