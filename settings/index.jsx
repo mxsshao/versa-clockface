@@ -49,11 +49,11 @@ function mySettings(props) {
       <Section title="Options">
         <Toggle settingsKey="fahrenheit" label="Use Fahrenheit" />
         <Button list label="Reset Colors to Default" onClick={function() {
-          props.settingsStorage.setItem("color_line", "{}");
-          props.settingsStorage.setItem("color_steps", "{}");
-          props.settingsStorage.setItem("color_cals", "{}");
-          props.settingsStorage.setItem("color_active", "{}");
-          props.settingsStorage.setItem("color_heart", "{}");
+          props.settingsStorage.setItem("color_line", JSON.stringify("#642a17"));
+          props.settingsStorage.setItem("color_steps", JSON.stringify("#bcd8f8"));
+          props.settingsStorage.setItem("color_cals", JSON.stringify("#7898f8"));
+          props.settingsStorage.setItem("color_active", JSON.stringify("#d893ff"));
+          props.settingsStorage.setItem("color_heart", JSON.stringify("#f83c40"));
         }}
       />
       </Section>

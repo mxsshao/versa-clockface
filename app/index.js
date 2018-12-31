@@ -107,14 +107,17 @@ display.onchange = function () {
 function loadSettings() {
     try {
         settings = fs.readFileSync(SETTINGS_FILE, SETTINGS_TYPE);
-        console.log(JSON.stringify(settings));
         mergeWithDefaultSettings();
     } catch (e) {
         console.log(e);
         settings = default_settings;
     }
-
-    applySettings();
+    try {
+        applySettings();
+    } catch (e) {
+        console.log(e);
+        fs.unlinkSync(SETTINGS_FILE);
+    }
 }
 
 function mergeWithDefaultSettings() {

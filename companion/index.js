@@ -1,9 +1,9 @@
-import * as messaging from "messaging";
+import { me } from "companion";
 import { settingsStorage } from "settings";
 import { outbox } from "file-transfer";
 import * as cbor from 'cbor';
 import * as weather from "fitbit-weather/companion";
-import { me } from "companion";
+
 
 const SETTINGS_TYPE = "cbor";
 const SETTINGS_FILE = "settingslVpGRFDPHzo14ZE2S.cbor";
@@ -39,10 +39,10 @@ function restoreSettings() {
         if (key) {
             var value = settingsStorage.getItem(key);
             try {
-            settings[key] = JSON.parse(value);
+                settings[key] = JSON.parse(value);
             }
             catch(ex) {
-            settings[key] = value;
+                settings[key] = value;
             }
         }
     }
@@ -50,7 +50,6 @@ function restoreSettings() {
 
 //restore old previous settings on load
 initialize();
-
 // Settings were changed while the companion was not running
 if (me.launchReasons.settingsChanged) {
     // Send the value of the setting
