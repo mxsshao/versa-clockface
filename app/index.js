@@ -123,7 +123,7 @@ function loadSettings() {
 function mergeWithDefaultSettings() {
     for (let key in default_settings) {
         if (!settings.hasOwnProperty(key)) {
-        settings[key] = defaultSettings[key];
+        settings[key] = default_settings[key];
         }
     }
 }
