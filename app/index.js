@@ -37,6 +37,10 @@ const arc_cals = document.getElementById("arc_cals");
 const arc_active = document.getElementById("arc_active");
 const arc_heart = document.getElementById("arc_heart");
 const line = document.getElementsByClassName("line");
+const act_steps = document.getElementsByClassName("act_steps");
+const act_cals = document.getElementsByClassName("act_cals");
+const act_active = document.getElementsByClassName("act_active");
+const act_heart = document.getElementsByClassName("act_heart");
 
 let fahrenheit = false;
 
@@ -139,6 +143,26 @@ function settingsCallback(data) {
     if (data.color_line) {
         for (let i = 0; i < line.length; i++) {
             line[i].style.fill = data.color_line;
+        }
+    }
+    if (data.color_steps) {
+        for (let i = 0; i < act_steps.length; i++) {
+            act_steps[i].style.fill = data.color_steps;
+        }
+    }
+    if (data.color_cals) {
+        for (let i = 0; i < act_cals.length; i++) {
+            act_cals[i].style.fill = data.color_cals;
+        }
+    }
+    if (data.color_active) {
+        for (let i = 0; i < act_active.length; i++) {
+            act_active[i].style.fill = data.color_active;
+        }
+    }
+    if (data.color_heart) {
+        for (let i = 0; i < act_heart.length; i++) {
+            act_heart[i].style.fill = data.color_heart;
         }
     }
     if (data.fahrenheit) {
