@@ -46,6 +46,7 @@ const options = [
 function mySettings(props) {
   return (
     <Page>
+      <Text>Note: Settings may take a while to apply. If you are having difficulty try fully syncing your device before changing settings.</Text>
       <Section title="Options">
         <Toggle settingsKey="fahrenheit" label="Use Fahrenheit" />
         <Button list label="Reset Colors to Default" onClick={function() {
@@ -62,6 +63,11 @@ function mySettings(props) {
           <ColorSelect settingsKey={settingsKey} colors={color_set} />
         </Section>
       )}
+      <Section title="About">
+          <Text>Designed as a personal project.</Text>
+          <Text>I wanted a clockface that could display the information I wanted on one page while still looking minimalistic.</Text>
+          <Link source="mailto:fitbit@mxshao.com">fitbit@mxshao.com</Link>
+      </Section>
     </Page>
   );
 }

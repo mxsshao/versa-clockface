@@ -27,3 +27,7 @@ fitbit$ install
 
 + <https://github.com/gregoiresage/fitbit-weather>
 + <https://github.com/erikflowers/weather-icons>
+
+## References
+
++ https://github.com/Fitbit/ossapps
