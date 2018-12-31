@@ -22,14 +22,14 @@ function initialize() {
 
 function sendSettingsToWatch() {
     console.log("Sending settings");
-    //restoreSettings();
+    restoreSettings();
     outbox.enqueue(SETTINGS_FILE, cbor.encode(settings));
 }
 
 // A user changes settings
 settingsStorage.onchange = evt => {
     console.log("Settings changed");
-    settings[evt.key] = JSON.parse(evt.newValue);
+    //settings[evt.key] = JSON.parse(evt.newValue);
     sendSettingsToWatch();
 };
 
