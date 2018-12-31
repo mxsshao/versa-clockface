@@ -29,6 +29,6 @@
   <arc class="arc_front" id="arc_cals" x="92" y="214" fill="#7898f8"/>
   <arc class="arc_front" id="arc_active" x="162" y="214" fill="#d893ff"/>
   <arc class="arc_front" id="arc_heart" x="232" y="214" fill="#f83c40"/>
-  <rect x="0" y="76" width="100%" height="3" fill="#642a17"/>
-  <rect x="0" y="198" width="100%" height="3" fill="#642a17"/>
+  <rect class="line" x="0" y="76" width="100%" height="3" fill="#642a17"/>
+  <rect class="line" x="0" y="198" width="100%" height="3" fill="#642a17"/>
 </svg>

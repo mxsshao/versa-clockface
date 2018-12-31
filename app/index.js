@@ -8,6 +8,7 @@ import { battery, charger } from "power"; // import battery level (see line26)
 import { today as activity_today, goals} from "user-activity";
 import { display } from "display";
 import * as weather from "fitbit-weather/app";
+import * as simple_settings from "./device-settings";
 
 // Update the clock every second
 clock.granularity = "seconds";
@@ -35,6 +36,9 @@ const arc_steps = document.getElementById("arc_steps");
 const arc_cals = document.getElementById("arc_cals");
 const arc_active = document.getElementById("arc_active");
 const arc_heart = document.getElementById("arc_heart");
+const line = document.getElementsByClassName("line");
+
+let fahrenheit = false;
 
 // Heart rate and body sensors
 const hrm = new HeartRateSensor();
@@ -76,7 +80,7 @@ body.onreading = () => {
 body.start();
 
 let updateWeather = function() {
-    weather.fetch(12 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
+    weather.fetch(30 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
         .then(function(weather) {
             let location = weather.location;
             if (location.length > 18) {
@@ -85,9 +89,17 @@ let updateWeather = function() {
                 location = x + "...";
             }
             weather_location.text = location;
-            let temp = weather.temperatureC;
-            let disp_temp = monoDigits(temp.toFixed(1));
-            weather_temp.text = `${disp_temp}°C`;
+
+            let temp;
+            if (fahrenheit) {
+                temp = weather.temperatureF;
+                let disp_temp = monoDigits(temp.toFixed(1));
+                weather_temp.text = `${disp_temp}°F`;
+            } else {
+                temp = weather.temperatureC; 
+                let disp_temp = monoDigits(temp.toFixed(1));
+                weather_temp.text = `${disp_temp}°C`;
+            }
 
             // Workaround to deal with openweathermap date quirks.
             // OWM gives sunrise/sunset in UTC time but gives the wrong date.
@@ -119,6 +131,28 @@ display.onchange = function () {
         updateWeather();
     }
 }
+
+
+/* -------- SETTINGS -------- */
+function settingsCallback(data) {
+    if (!data) {
+        return;
+    }
+    if (data.color_line) {
+        for (let i = 0; i < line.length; i++) {
+            line[i].style.fill = data.color_line;
+        }
+    }
+    if (data.fahrenheit) {
+        fahrenheit = true;
+        updateWeather();
+    } else {
+        fahrenheit = false;
+        updateWeather();
+    }
+}
+simple_settings.initialize(settingsCallback);
+
 
 // Update handler each tick
 clock.ontick = (evt) => {

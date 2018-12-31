@@ -1,4 +1,4 @@
-# Clockface for Fitbit Versa
+# Clockface for Fitbit Versa "Illium Essentials"
 
 ![screenshot](/screenshots/watchface.png)
 
