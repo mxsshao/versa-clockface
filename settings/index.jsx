@@ -1,4 +1,7 @@
 const color_set = [
+  // Color pallete from:
+  // https://flatuicolors.com/palette/au
+  // https://flatuicolors.com/palette/us
   { color: "#f5f5f5" },
   { color: "#A0A0A0" },
   { color: "#505050" },
