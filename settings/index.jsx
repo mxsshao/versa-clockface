@@ -66,7 +66,7 @@ function mySettings(props) {
       <Section title="About">
           <Text>Designed as a personal project.</Text>
           <Text>I wanted a clockface that could display the information I wanted on one page while still looking minimalistic.</Text>
-          <Link source="mailto:fitbit@mxshao.com">fitbit@mxshao.com</Link>
+          <Link source="mailto:fitbit@mxshao.com"><Text align="center">fitbit@mxshao.com</Text></Link>
       </Section>
     </Page>
   );
