@@ -8,7 +8,17 @@ import { battery, charger } from "power"; // import battery level (see line26)
 import { today as activity_today, goals} from "user-activity";
 import { display } from "display";
 import * as weather from "fitbit-weather/app";
-import * as simple_settings from "./device-settings";
+import * as fs from "fs";
+import * as cbor from 'cbor';
+import { inbox } from "file-transfer";
+
+const SETTINGS_TYPE = "cbor";
+const SETTINGS_FILE = "settingslVpGRFDPHzo14ZE2S.cbor";
+
+let default_settings = {
+    fahrenheit: false
+};
+let settings = default_settings;
 
 // Update the clock every second
 clock.granularity = "seconds";
@@ -42,7 +52,121 @@ const act_cals = document.getElementsByClassName("act_cals");
 const act_active = document.getElementsByClassName("act_active");
 const act_heart = document.getElementsByClassName("act_heart");
 
-let fahrenheit = false;
+let updateWeather = function() {
+    weather.fetch(30 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
+        .then(function(weather) {
+            let location = weather.location;
+            if (location.length > 18) {
+                let x = location.substr(0, 14);
+                x = x.replace(/\s$/, "")
+                location = x + "...";
+            }
+            weather_location.text = location;
+
+            let temp, disp_temp;
+            if (settings.fahrenheit) {
+                temp = weather.temperatureF;
+                disp_temp = monoDigits(temp.toFixed(1));
+                weather_temp.text = `${disp_temp}°F`;
+            } else {
+                temp = weather.temperatureC; 
+                disp_temp = monoDigits(temp.toFixed(1));
+                weather_temp.text = `${disp_temp}°C`;
+            }
+
+            // Workaround to deal with openweathermap date quirks.
+            // OWM gives sunrise/sunset in UTC time but gives the wrong date.
+            let now = new Date();
+            let c_now = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            // Convert sunrise and sunset into local time.
+            let sunrise = new Date(0);
+            sunrise.setUTCMilliseconds(weather.sunrise);
+            let sunset = new Date(0);
+            sunset.setUTCMilliseconds(weather.sunset);
+            // Compare the time only since date is incorrect.
+            let c_sunrise = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
+            let c_sunset = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
+            let is_day = (c_now > c_sunrise && c_now < c_sunset);
+            weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
+            
+            // console.log(c_now);
+            // console.log(c_sunrise);
+            // console.log(c_sunset);
+            // console.log(JSON.stringify(weather));
+        })
+        .catch(error => console.log(JSON.stringify(error)));
+}
+
+display.onchange = function () {
+    if (display.on) {
+        updateWeather();
+    }
+}
+
+// SETTINGS
+function loadSettings() {
+    try {
+        settings = fs.readFileSync(SETTINGS_FILE, SETTINGS_TYPE);
+        console.log(JSON.stringify(settings));
+        mergeWithDefaultSettings();
+    } catch (e) {
+        console.log(e);
+        settings = default_settings;
+    }
+
+    applySettings();
+}
+
+function mergeWithDefaultSettings() {
+    for (let key in default_settings) {
+        if (!settings.hasOwnProperty(key)) {
+        settings[key] = defaultSettings[key];
+        }
+    }
+}
+
+function applySettings() {
+    if (settings.color_line) {
+        for (let i = 0; i < line.length; i++) {
+            line[i].style.fill = settings.color_line;
+        }
+    }
+    if (settings.color_steps) {
+        for (let i = 0; i < act_steps.length; i++) {
+            act_steps[i].style.fill = settings.color_steps;
+        }
+    }
+    if (settings.color_cals) {
+        for (let i = 0; i < act_cals.length; i++) {
+            act_cals[i].style.fill = settings.color_cals;
+        }
+    }
+    if (settings.color_active) {
+        for (let i = 0; i < act_active.length; i++) {
+            act_active[i].style.fill = settings.color_active;
+        }
+    }
+    if (settings.color_heart) {
+        for (let i = 0; i < act_heart.length; i++) {
+            act_heart[i].style.fill = settings.color_heart;
+        }
+    }
+    updateWeather();
+}
+
+
+function processInbox() {
+    let fileName;
+    while (fileName = inbox.nextFile()) {
+        if (fileName === SETTINGS_FILE) {
+            loadSettings();
+            console.log("Settings received");
+        }
+    }
+}
+
+loadSettings();
+inbox.onnewfile = processInbox;
 
 // Heart rate and body sensors
 const hrm = new HeartRateSensor();
@@ -82,97 +206,6 @@ body.onreading = () => {
     }
 };
 body.start();
-
-let updateWeather = function() {
-    weather.fetch(30 * 60 * 1000) // Return the cached value if it is less than 12 minutes old 
-        .then(function(weather) {
-            let location = weather.location;
-            if (location.length > 18) {
-                let x = location.substr(0, 14);
-                x = x.replace(/\s$/, "")
-                location = x + "...";
-            }
-            weather_location.text = location;
-
-            let temp, disp_temp;
-            if (fahrenheit) {
-                temp = weather.temperatureF;
-                disp_temp = monoDigits(temp.toFixed(1));
-                weather_temp.text = `${disp_temp}°F`;
-            } else {
-                temp = weather.temperatureC; 
-                disp_temp = monoDigits(temp.toFixed(1));
-                weather_temp.text = `${disp_temp}°C`;
-            }
-
-            // Workaround to deal with openweathermap date quirks.
-            // OWM gives sunrise/sunset in UTC time but gives the wrong date.
-            let now = new Date();
-            let c_now = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-            // Convert sunrise and sunset into local time.
-            let sunrise = new Date(0);
-            sunrise.setUTCMilliseconds(weather.sunrise);
-            let sunset = new Date(0);
-            sunset.setUTCMilliseconds(weather.sunset);
-            // Compare the time only since date is incorrect.
-            let c_sunrise = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
-            let c_sunset = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
-            let is_day = (c_now > c_sunrise && c_now < c_sunset);
-            weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
-            
-            // console.log(c_now);
-            // console.log(c_sunrise);
-            // console.log(c_sunset);
-            // console.log(JSON.stringify(weather));
-        })
-        .catch(error => console.log(JSON.stringify(error)));
-}
-
-display.onchange = function () {
-    if (display.on) {
-        updateWeather();
-    }
-}
-
-
-/* -------- SETTINGS -------- */
-function settingsCallback(data) {
-    if (!data) {
-        return;
-    }
-    if (data.color_line) {
-        for (let i = 0; i < line.length; i++) {
-            line[i].style.fill = data.color_line;
-        }
-    }
-    if (data.color_steps) {
-        for (let i = 0; i < act_steps.length; i++) {
-            act_steps[i].style.fill = data.color_steps;
-        }
-    }
-    if (data.color_cals) {
-        for (let i = 0; i < act_cals.length; i++) {
-            act_cals[i].style.fill = data.color_cals;
-        }
-    }
-    if (data.color_active) {
-        for (let i = 0; i < act_active.length; i++) {
-            act_active[i].style.fill = data.color_active;
-        }
-    }
-    if (data.color_heart) {
-        for (let i = 0; i < act_heart.length; i++) {
-            act_heart[i].style.fill = data.color_heart;
-        }
-    }
-    if (data.fahrenheit) {
-        fahrenheit = true;
-    } else {
-        fahrenheit = false;
-    }
-    updateWeather();
-}
-simple_settings.initialize(settingsCallback);
 
 
 // Update handler each tick
