@@ -21,8 +21,9 @@ function initialize() {
 }
 
 function sendSettingsToWatch() {
-    console.log("Sending settings");
     restoreSettings();
+    console.log("Sending settings");
+    // console.log(JSON.stringify(settings));
     outbox.enqueue(SETTINGS_FILE, cbor.encode(settings));
 }
 

@@ -48,7 +48,14 @@ function mySettings(props) {
     <Page>
       <Text>Note: Settings may take a while to apply. If you are having difficulty try fully syncing your device before changing settings.</Text>
       <Section title="Options">
-        <Toggle settingsKey="fahrenheit" label="Use Fahrenheit" />
+      <Select
+        label="Temperature Unit"
+        settingsKey="fahrenheit"
+        options={[
+          {name: "°Celsius", value: false},
+          {name: "°Fahrenheit", value: true}
+        ]}
+      />
         <Button list label="Reset Colors to Default" onClick={function() {
           props.settingsStorage.setItem("color_line", JSON.stringify("#642a17"));
           props.settingsStorage.setItem("color_steps", JSON.stringify("#bcd8f8"));

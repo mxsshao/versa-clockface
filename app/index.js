@@ -107,7 +107,9 @@ display.onchange = function () {
 function loadSettings() {
     try {
         settings = fs.readFileSync(SETTINGS_FILE, SETTINGS_TYPE);
+        transformSettings();
         mergeWithDefaultSettings();
+        // console.log(JSON.stringify(settings));
     } catch (e) {
         console.log(e);
         settings = default_settings;
@@ -117,6 +119,13 @@ function loadSettings() {
     } catch (e) {
         console.log(e);
         fs.unlinkSync(SETTINGS_FILE);
+    }
+}
+
+function transformSettings() {
+    //change all settings you want in another format as sent by the companion here
+    if (settings.fahrenheit) {
+        settings.fahrenheit = settings.fahrenheit.values[0].value;
     }
 }
 
