@@ -12,7 +12,7 @@ export function getDayName(index) {
 }
 
 export function getMonthName(index) {
-    let months = ["January", "February", "March", "April", "Mayay", "June", "July", "August", "September", "October", "November", "December"];
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return months[index];
 }
 
