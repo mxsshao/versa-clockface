@@ -47,34 +47,34 @@ function mySettings(props) {
   return (
     <Page>
       <Text>Note: Settings may take a while to apply. If you are having difficulty try fully syncing your device before changing settings.</Text>
-      <Section title="Options">
-      <Select
-        label="Temperature Unit"
-        settingsKey="fahrenheit"
-        options={[
-          {name: "°Celsius", value: false},
-          {name: "°Fahrenheit", value: true}
-        ]}
-      />
+      <Section title="Weather">
+        <Select
+          label="Temperature Unit"
+          settingsKey="fahrenheit"
+          options={[
+            {name: "°Celsius", value: false},
+            {name: "°Fahrenheit", value: true}
+          ]}
+        />
+        <TextInput
+          label="OpenWeatherMap API Key"
+          settingsKey="weather_api_key"
+        />
+      </Section>
+      <Section title="Colors">
         <Button list label="Reset Colors to Default" onClick={function() {
-          props.settingsStorage.setItem("color_line", JSON.stringify("#642a17"));
-          props.settingsStorage.setItem("color_steps", JSON.stringify("#bcd8f8"));
-          props.settingsStorage.setItem("color_cals", JSON.stringify("#7898f8"));
-          props.settingsStorage.setItem("color_active", JSON.stringify("#d893ff"));
-          props.settingsStorage.setItem("color_heart", JSON.stringify("#f83c40"));
-        }}
-      />
+            props.settingsStorage.setItem("color_line", JSON.stringify("#642a17"));
+            props.settingsStorage.setItem("color_steps", JSON.stringify("#bcd8f8"));
+            props.settingsStorage.setItem("color_cals", JSON.stringify("#7898f8"));
+            props.settingsStorage.setItem("color_active", JSON.stringify("#d893ff"));
+            props.settingsStorage.setItem("color_heart", JSON.stringify("#f83c40"));
+          }} />
       </Section>
       {options.map(([title, settingsKey]) =>
         <Section title={title}>
           <ColorSelect settingsKey={settingsKey} colors={color_set} />
         </Section>
       )}
-      <Section title="About">
-          <Text>Designed as a personal project.</Text>
-          <Text>I wanted a clockface that could display the information I wanted on one page while still looking minimalistic.</Text>
-          <Link source="mailto:fitbit@mxshao.com"><Text align="center">fitbit@mxshao.com</Text></Link>
-      </Section>
     </Page>
   );
 }

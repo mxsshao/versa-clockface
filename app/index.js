@@ -53,48 +53,53 @@ const act_active = document.getElementsByClassName("act_active");
 const act_heart = document.getElementsByClassName("act_heart");
 
 let updateWeather = function() {
-    weather.fetch(30 * 60 * 1000) // Return the cached value if it is less than 30 minutes old 
-        .then(function(weather) {
-            let location = weather.location;
-            if (location.length > 18) {
-                let x = location.substr(0, 14);
-                x = x.replace(/\s$/, "")
-                location = x + "...";
-            }
-            weather_location.text = location;
+    try {
+        weather.fetch(0.5 * 60 * 1000) // Return the cached value if it is less than 30 minutes old 
+            .then(function(weather) {
+                let location = weather.location;
+                if (location.length > 18) {
+                    let x = location.substr(0, 14);
+                    x = x.replace(/\s$/, "")
+                    location = x + "...";
+                }
+                weather_location.text = location;
 
-            let temp, disp_temp;
-            if (settings.fahrenheit) {
-                temp = weather.temperatureF;
-                disp_temp = monoDigits(temp.toFixed(1));
-                weather_temp.text = `${disp_temp}°F`;
-            } else {
-                temp = weather.temperatureC; 
-                disp_temp = monoDigits(temp.toFixed(1));
-                weather_temp.text = `${disp_temp}°C`;
-            }
+                let temp, disp_temp;
+                if (settings.fahrenheit) {
+                    temp = weather.temperatureF;
+                    disp_temp = monoDigits(temp.toFixed(1));
+                    weather_temp.text = `${disp_temp}°F`;
+                } else {
+                    temp = weather.temperatureC; 
+                    disp_temp = monoDigits(temp.toFixed(1));
+                    weather_temp.text = `${disp_temp}°C`;
+                }
 
-            // Workaround to deal with openweathermap date quirks.
-            // OWM gives sunrise/sunset in UTC time but gives the wrong date.
-            let now = new Date();
-            let c_now = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-            // Convert sunrise and sunset into local time.
-            let sunrise = new Date(0);
-            sunrise.setUTCMilliseconds(weather.sunrise);
-            let sunset = new Date(0);
-            sunset.setUTCMilliseconds(weather.sunset);
-            // Compare the time only since date is incorrect.
-            let c_sunrise = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
-            let c_sunset = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
-            let is_day = (c_now > c_sunrise && c_now < c_sunset);
-            weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
-            
-            // console.log(c_now);
-            // console.log(c_sunrise);
-            // console.log(c_sunset);
-            // console.log(JSON.stringify(weather));
-        })
-        .catch(error => console.log(JSON.stringify(error)));
+                // Workaround to deal with openweathermap date quirks.
+                // OWM gives sunrise/sunset in UTC time but gives the wrong date.
+                let now = new Date();
+                let c_now = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+                // Convert sunrise and sunset into local time.
+                let sunrise = new Date(0);
+                sunrise.setUTCMilliseconds(weather.sunrise);
+                let sunset = new Date(0);
+                sunset.setUTCMilliseconds(weather.sunset);
+                // Compare the time only since date is incorrect.
+                let c_sunrise = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
+                let c_sunset = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
+                let is_day = (c_now > c_sunrise && c_now < c_sunset);
+                weather_icon.href = getWeatherIcon(weather.realConditionCode, is_day);
+                
+                // console.log(c_now);
+                // console.log(c_sunrise);
+                // console.log(c_sunset);
+                // console.log(JSON.stringify(weather));
+            });
+    } catch (e) {
+        weather_temp.text = "";
+        weather_location.text = "";
+        weather_icon.href = "";
+    }
 }
 
 display.onchange = function () {

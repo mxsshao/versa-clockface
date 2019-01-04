@@ -8,20 +8,20 @@ import * as weather from "fitbit-weather/companion";
 const SETTINGS_TYPE = "cbor";
 const SETTINGS_FILE = "settingslVpGRFDPHzo14ZE2S.cbor";
 
-weather.setup({
-    provider: weather.Providers.openweathermap,
-    apiKey: "17b69216de64de6cc6d7f786e40d8a09"
-});
-
 let settings = {};
 
 function initialize() {
     //make sure the stored settings are up to date
     restoreSettings();
+    if (settings.weather_api_key.name) {
+        weather.setup({
+            provider: weather.Providers.openweathermap,
+            apiKey: settings.weather_api_key.name
+        });
+    }
 }
 
 function sendSettingsToWatch() {
-    restoreSettings();
     console.log("Sending settings");
     // console.log(JSON.stringify(settings));
     outbox.enqueue(SETTINGS_FILE, cbor.encode(settings));
@@ -30,7 +30,8 @@ function sendSettingsToWatch() {
 // A user changes settings
 settingsStorage.onchange = evt => {
     console.log("Settings changed");
-    //settings[evt.key] = JSON.parse(evt.newValue);
+
+    initialize();
     sendSettingsToWatch();
 };
 
