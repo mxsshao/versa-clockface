@@ -13,11 +13,13 @@ let settings = {};
 function initialize() {
     //make sure the stored settings are up to date
     restoreSettings();
-    if (settings.weather_api_key.name) {
-        weather.setup({
-            provider: weather.Providers.openweathermap,
-            apiKey: settings.weather_api_key.name
-        });
+    if (settings.weather_api_key) {
+        if (settings.weather_api_key.name) {
+            weather.setup({
+                provider: weather.Providers.openweathermap,
+                apiKey: settings.weather_api_key.name
+            });
+        }
     }
 }
 
