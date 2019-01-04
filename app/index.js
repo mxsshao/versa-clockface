@@ -54,7 +54,7 @@ const act_heart = document.getElementsByClassName("act_heart");
 
 let updateWeather = function() {
     try {
-        weather.fetch(0.5 * 60 * 1000) // Return the cached value if it is less than 30 minutes old 
+        weather.fetch(30 * 60 * 1000) // Return the cached value if it is less than 30 minutes old 
             .then(function(weather) {
                 let location = weather.location;
                 if (location.length > 18) {
